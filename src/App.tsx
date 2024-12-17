@@ -30,7 +30,13 @@ export default function App(): JSX.Element {
     setFilterSelected(filter);
   }
 
+  function handleRemoveAllCompleted() {
+    const updatedTodos = todos.filter((todo) => !todo.completed);
+    setTodos(updatedTodos);
+  }
+
   const activeCount = todos.filter((todo) => !todo.completed).length;
+  const completedCount = todos.length - activeCount;
 
   const todosToShow = todos.filter(
     (todo) =>
@@ -42,7 +48,13 @@ export default function App(): JSX.Element {
   return (
     <div className="todoapp">
       <Todos todos={todosToShow} onRemoveTodo={handleRemove} onToggleCompleteTodo={handleCompleted} />
-      <Footer activeCount={activeCount} filterSelected={filterSelected} handleFilterChange={handleFilterChange} />
+      <Footer
+        activeCount={activeCount}
+        completedCount={completedCount}
+        filterSelected={filterSelected}
+        onClearCompleted={handleRemoveAllCompleted}
+        handleFilterChange={handleFilterChange}
+      />
     </div>
   );
 }
