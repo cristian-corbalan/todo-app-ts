@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Todos from './components/Todos.tsx';
-import { type TodoId } from './types';
+import { type TodoId, type TodoToggleCompleted } from './types';
 
 const mockTodos = [
   { id: 't1', title: 'Learn TypeScript', completed: false },
@@ -17,9 +17,15 @@ export default function App(): JSX.Element {
     setTodos(updatedTodos);
   };
 
+  const handleCompleted = ({ id, completed }: TodoToggleCompleted) => {
+    const updatedTodos = todos.map((todo) => (todo.id === id ? { ...todo, completed } : todo));
+
+    setTodos(updatedTodos);
+  };
+
   return (
     <div className="todoapp">
-      <Todos todos={todos} onRemoveTodo={handleRemove} />
+      <Todos todos={todos} onRemoveTodo={handleRemove} onToggleCompleteTodo={handleCompleted} />
     </div>
   );
 }

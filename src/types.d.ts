@@ -5,5 +5,6 @@ export interface Todo {
 }
 
 export type TodoId = Pick<Todo, 'id'>;
+export type TodoToggleCompleted = Pick<Todo, 'id' | 'completed'>;
 
 export type ListOfTodos = Todo[];
