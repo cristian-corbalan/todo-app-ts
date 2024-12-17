@@ -1,31 +1,18 @@
 import { useState } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
-import './App.css';
+import Todos from './components/Todos.tsx';
 
-function App() {
-  const [count, setCount] = useState(0);
+const mockTodos = [
+  { id: 't1', title: 'Learn TypeScript', completed: false },
+  { id: 't2', title: 'Build a Todo App', completed: true },
+  { id: 't3', title: 'Refactor code', completed: false },
+];
+
+export default function App(): JSX.Element {
+  const [todos, setTodos] = useState(mockTodos);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank" rel="noreferrer">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank" rel="noreferrer">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
-    </>
+    <div className="todoapp">
+      <Todos todos={todos} />
+    </div>
   );
 }
-
-export default App;
