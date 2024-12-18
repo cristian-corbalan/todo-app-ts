@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import Footer from './components/Footer.tsx';
+import Header from './components/Header.tsx';
 import Todos from './components/Todos.tsx';
 import { TODO_FILTERS } from './consts.ts';
-import { FilterValues, type TodoId, type TodoToggleCompleted } from './types';
+import { FilterValues, type TodoId, TodoTitle, type TodoToggleCompleted } from './types';
 
 const mockTodos = [
   { id: 't1', title: 'Learn TypeScript', completed: false },
@@ -35,6 +36,16 @@ export default function App(): JSX.Element {
     setTodos(updatedTodos);
   }
 
+  function handleAddTodo({ title }: TodoTitle) {
+    const newTodo = {
+      id: crypto.randomUUID(),
+      title,
+      completed: false,
+    };
+
+    setTodos([...todos, newTodo]);
+  }
+
   const activeCount = todos.filter((todo) => !todo.completed).length;
   const completedCount = todos.length - activeCount;
 
@@ -46,15 +57,18 @@ export default function App(): JSX.Element {
   );
 
   return (
-    <div className="todoapp">
-      <Todos todos={todosToShow} onRemoveTodo={handleRemove} onToggleCompleteTodo={handleCompleted} />
-      <Footer
-        activeCount={activeCount}
-        completedCount={completedCount}
-        filterSelected={filterSelected}
-        onClearCompleted={handleRemoveAllCompleted}
-        handleFilterChange={handleFilterChange}
-      />
-    </div>
+    <>
+      <div className="todoapp">
+        <Header onAddTodo={handleAddTodo} />
+        <Todos todos={todosToShow} onRemoveTodo={handleRemove} onToggleCompleteTodo={handleCompleted} />
+        <Footer
+          activeCount={activeCount}
+          completedCount={completedCount}
+          filterSelected={filterSelected}
+          onClearCompleted={handleRemoveAllCompleted}
+          handleFilterChange={handleFilterChange}
+        />
+      </div>
+    </>
   );
 }
